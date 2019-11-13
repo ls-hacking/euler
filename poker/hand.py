@@ -74,7 +74,7 @@ class Hand:
         is_straight = True
         values = [each.value for each in self.cards]
         for i in range(1, 5):
-            if values[i] != values[i-1].value + 1:
+            if values[i].value + 1 != values[i-1].value:
                 is_straight = False
                 break
 
@@ -84,7 +84,7 @@ class Hand:
         second_most_common = value_counter.most_common(2)[1]
 
         # royal flush
-        if is_flush and is_straight and self.cards[0] == CardValue.ace:
+        if is_flush and is_straight and self.cards[0].value == CardValue.ace:
             self.rank = HandRank.royal_flush
             self.cards_in_rank = self.cards[:]
             self.cards_not_in_rank = []
@@ -135,7 +135,7 @@ class Hand:
 
         # three of a kind
         elif most_common[1] == 3 and second_most_common[1] != 2:
-            self.rank = HandRank.full_house
+            self.rank = HandRank.three_of_a_kind
             self.cards_in_rank = [
                 card for card in self.cards
                 if card.value == most_common[0].value

@@ -1,6 +1,11 @@
 from collections import Counter
+import logging
 
 from poker.hand import Hand
+
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger()
 
 
 def main():
@@ -8,19 +13,26 @@ def main():
     with open("p054_poker.txt", "r+") as f:
         for text in f:
             p1, p2 = hands_from_text(text)
+            logger.debug(f"p1 rank: {p1.rank}")
+            logger.debug(f"p2 rank: {p2.rank}")
             if p1 > p2:
+                logger.debug("winner: 1")
                 wins.update(('player 1', ))
             elif p2 > p1:
+                logger.debug("winner: 2")
                 wins.update(('player 2', ))
             else:
                 wins.update(('draw', ))
     print(wins.most_common())
 
 def hands_from_text(text):
+    p1_cards = text[:14]
+    p2_cards = text[15:].strip()
+    logger.debug(f"cards: {p1_cards}/{p2_cards}")
     return (
-        Hand.from_string(text[:14]),
-        # use strip() to remove the newline (if present)
-        Hand.from_string(text[15:].strip()),
+        Hand.from_string(p1_cards),
+        # use strip() to remove he newline (if present)
+        Hand.from_string(p2_cards),
     )
 
 
