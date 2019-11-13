@@ -4,7 +4,7 @@ import logging
 from poker.hand import Hand
 
 
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger()
 
 
@@ -17,13 +17,15 @@ def main():
             logger.debug(f"p2 rank: {p2.rank}")
             if p1 > p2:
                 logger.debug("winner: 1")
-                wins.update(('player 1', ))
+                wins.update(('Player 1', ))
             elif p2 > p1:
                 logger.debug("winner: 2")
-                wins.update(('player 2', ))
+                wins.update(('Player 2', ))
             else:
                 wins.update(('draw', ))
-    print(wins.most_common())
+    print("Wins:")
+    for player, wins in wins.most_common():
+        print(f" - {player}: {wins}")
 
 def hands_from_text(text):
     p1_cards = text[:14]
